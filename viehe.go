@@ -2,10 +2,21 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
 var (
 	aika, saa, vesi, kala int
+	aamu                  = string("Kirkkaat värit. Tummemmat sävyt valon vähetessä.")
+	ilta                  = string("Tummemmat sävyt valon vähetessä. Aggressiiviset ja arsyttävät värisävyt.")
+	kirkas                = []string{"Hopea", "Kulta", "Keltainen", "Vihreä"}
+	samea                 = []string{"Punainen", "Ruskea"}
+	aurinkoinen           = []string{"Sininen", "Keltainen", "Ruskea"}
+	pilvinen              = []string{"Mattavärit", "Punainen", "Vihreä", "Violetti"}
+	hauki                 = string("Sopiva vieheen koko on 10-14cm")
+	ahven                 = string("Sopiva vieheen koko on 2.5-7cm")
+	kuha                  = string("Sopiva vieheen koko on 7-13cm")
+	lohi                  = string("Sopiva vieheen koko on 9-13cm")
 )
 
 func selvitaVesi() {
@@ -31,12 +42,31 @@ func selvitaSaa() {
 }
 
 func selvitaAika() {
-	fmt.Println("Onko aika nyt:")
-	fmt.Println("[1] Aamu")
-	fmt.Println("[2] Päivä")
-	fmt.Println("[3] Ilta")
+	fmt.Println("Menetkö kalaan nyt:")
+	fmt.Println("[1] Kyllä")
+	fmt.Println("[2] Ei")
 	fmt.Scan(&aika)
-	if aika > 3 {
+	if aika > 2 {
+		fmt.Println("Valinta väärin. Valitse uudelleen. [0] ohittaa ")
+		selvitaAika()
+	}
+	if aika == 1 {
+		t := time.Now()
+		switch {
+		case t.Hour() < 12:
+			aika = 1
+			return
+		case t.Hour() > 12:
+			aika = 2
+			return
+		}
+	}
+
+	fmt.Println("Mihin aikaan kalastat:")
+	fmt.Println("[1] Ennen puoltapäivää:")
+	fmt.Println("[2] Puolenpäivän jälkeen:")
+	fmt.Scan(&aika)
+	if aika > 2 {
 		fmt.Println("Valinta väärin. Valitse uudelleen. [0] ohittaa ")
 		selvitaAika()
 	}
@@ -57,79 +87,53 @@ func selvitaKala() {
 }
 
 func main() {
-
-	//VASTAUKSET
-	kirkas := []string{"Hopea", "Kulta", "Keltainen", "Vihreä"}
-	samea := []string{"Punainen", "Ruskea"}
-	aurinkoinen := []string{"Sininen", "Keltainen", "Ruskea"}
-	pilvinen := []string{"Mattavärit", "Punainen", "Vihreä", "Violetti"}
-	aamu := string("Kirkkaat värit.")
-	paiva := string("Kirkkaat värit. Tummemmat sävyt valon vähetessä")
-	ilta := string("Tummemmat sävyt valon vähetessä. Aggressiiviset ja arsyttävät värisävyt.")
-	hauki := string("Sopiva vieheen koko on 10-14cm")
-	ahven := string("Sopiva vieheen koko on 2.5-7cm")
-	kuha := string("Sopiva vieheen koko on 7-13cm")
-	lohi := string("Sopiva vieheen koko on 9-13cm")
-
 	//SELVITETÄÄN OLOSUHTEET//
+	selvitaAika()
 	selvitaVesi()
 	selvitaSaa()
-	selvitaAika()
 	selvitaKala()
 
 	//PRINTATAAN YLLÄ SAADUT TULOKSET//
 	switch vesi {
 	case 1:
-		fmt.Println("Vesi on kirkasta.", kirkas)
+		fmt.Println("Kirkkaaseen veteen sopivat värit:", kirkas)
 		if saa == 1 {
-			fmt.Println("Sää on aurinkoinen.", aurinkoinen)
+			fmt.Println("Aurinkoiseen säähän sopivat värit:", aurinkoinen)
 			if aika == 1 {
-				fmt.Println("On aamu.", aamu)
+				fmt.Println("Ennen puoltapäivää:", aamu)
 			}
 			if aika == 2 {
-				fmt.Println("On päivä.", paiva)
-			}
-			if aika == 3 {
-				fmt.Println("On ilta.", ilta)
+				fmt.Println("Puolenpäivän jälkeen:", ilta)
 			}
 		}
 		if saa == 2 {
-			fmt.Println("Sää on pilvinen.", pilvinen)
+			fmt.Println("Pilviseen säähän sopivat värit:", pilvinen)
 			if aika == 1 {
-				fmt.Println("On aamu.", aamu)
+				fmt.Println("Ennen puoltapäivää:", aamu)
 			}
 			if aika == 2 {
-				fmt.Println("On päivä.", paiva)
-			}
-			if aika == 3 {
-				fmt.Println("On ilta.", ilta)
+				fmt.Println("Puolenpäivän jälkeen:", ilta)
 			}
 		}
 
 	case 2:
-		fmt.Println("Vesi on sameaa", samea)
+		fmt.Println("Sameaan veteen sopivat värit:", samea)
 		if saa == 1 {
-			fmt.Println("Sää on aurinkoinen.", aurinkoinen)
+			fmt.Println("Aurinkoiseen säähän sopivat värit:", aurinkoinen)
 			if aika == 1 {
-				fmt.Println("On aamu.", aamu)
+				fmt.Println("Ennen puoltapäivää:", aamu)
 			}
 			if aika == 2 {
-				fmt.Println("On päivä.", paiva)
-			}
-			if aika == 3 {
-				fmt.Println("On ilta.", ilta)
+				fmt.Println("Puolenpäivän jälkeen:", ilta)
 			}
 		}
 		if saa == 2 {
-			fmt.Println("Sää on pilvinen.", pilvinen)
+			fmt.Println("Pilviseen säähän sopivat värit:", pilvinen)
 			if aika == 1 {
-				fmt.Println("On aamu.", aamu)
+				fmt.Println("Ennen puoltapäivää:", aamu)
 			}
 			if aika == 2 {
-				fmt.Println("On päivä.", paiva)
-			}
-			if aika == 3 {
-				fmt.Println("On ilta.", ilta)
+				fmt.Println("Puolenpäivän jälkeen", ilta)
 			}
 		}
 
