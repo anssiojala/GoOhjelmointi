@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 	"time"
 )
 
@@ -13,10 +15,10 @@ var (
 	samea                 = []string{"Punainen", "Ruskea"}
 	aurinkoinen           = []string{"Sininen", "Keltainen", "Ruskea"}
 	pilvinen              = []string{"Mattavärit", "Punainen", "Vihreä", "Violetti"}
-	hauki                 = string("Sopiva vieheen koko on 10-14cm")
-	ahven                 = string("Sopiva vieheen koko on 2.5-7cm")
-	kuha                  = string("Sopiva vieheen koko on 7-13cm")
-	lohi                  = string("Sopiva vieheen koko on 9-13cm")
+	hauki                 = string("Paras syönti yleensä huhtikuussa kudun jälkeen. Viihtyy kaislikossa. Sopiva vieheen koko on 10-14cm.")
+	ahven                 = string("Syönti sijoittuu useimmiten aamuun ja iltaan. Sopiva vieheen koko on 2.5-7cm")
+	kuha                  = string("Toukokuusta lähellä pohjaa. Lämpimään aikaan lämpimässä pintavedessä. Sopiva vieheen koko on 7-13cm")
+	lohi                  = string("Korkeassa ja kylmässä vedessä syvällä ja lämpöisemmässä ja matalammassa lähempänä pintää. Sopiva vieheen koko on 9-13cm")
 )
 
 func selvitaVesi() {
@@ -150,5 +152,16 @@ func main() {
 		fmt.Println(lohi)
 	case 5:
 		break
+
 	}
+	fmt.Print("Päivän mietelause: ")
+	f, err := os.Open("sanontoja.txt")
+	if err != nil {
+		fmt.Println("Lausetta ei saatu haettua: ", err)
+		return
+	}
+	scanner := bufio.NewScanner(f)
+	scanner.Scan()
+	line := scanner.Text()
+	fmt.Println(line)
 }
