@@ -18,7 +18,7 @@ var (
 	hauki                 = string("Paras syönti yleensä huhtikuussa kudun jälkeen. Viihtyy kaislikossa. Sopiva vieheen koko on 10-14cm.")
 	ahven                 = string("Syönti sijoittuu useimmiten aamuun ja iltaan. Sopiva vieheen koko on 2.5-7cm")
 	kuha                  = string("Toukokuusta lähellä pohjaa. Lämpimään aikaan lämpimässä pintavedessä. Sopiva vieheen koko on 7-13cm")
-	lohi                  = string("Korkeassa ja kylmässä vedessä syvällä ja lämpöisemmässä ja matalammassa lähempänä pintää. Sopiva vieheen koko on 9-13cm")
+	lohi                  = string("Korkeassa ja kylmässä vedessä syvällä ja lämpöisemmässä ja matalammassa lähempänä pintaa. Sopiva vieheen koko on 9-13cm")
 )
 
 func selvitaVesi() {
@@ -33,7 +33,7 @@ func selvitaVesi() {
 }
 
 func selvitaSaa() {
-	fmt.Println("Onko sää nyt:")
+	fmt.Println("Onko sää on:")
 	fmt.Println("[1] Aurinkoinen")
 	fmt.Println("[2] Pilvinen")
 	fmt.Scan(&saa)
@@ -85,6 +85,20 @@ func selvitaKala() {
 	if kala > 5 {
 		fmt.Println("Valinta väärin. Valitse uudelleen. [0] ohittaa ")
 		selvitaKala()
+	}
+}
+
+func sanoJotain() {
+	f, err := os.Open("sanontoja.txt")
+	if err != nil {
+		//fmt.Println("Lausetta ei saatu haettua: ", err)
+		return
+	} else {
+		scanner := bufio.NewScanner(f)
+		scanner.Scan()
+		line := scanner.Text()
+		fmt.Print("Päivän mietelause: ")
+		fmt.Println(line)
 	}
 }
 
@@ -140,7 +154,7 @@ func main() {
 		}
 
 	}
-
+	//TULOSTA KALA JOS VALITTU//
 	switch kala {
 	case 1:
 		fmt.Println(hauki)
@@ -154,14 +168,6 @@ func main() {
 		break
 
 	}
-	fmt.Print("Päivän mietelause: ")
-	f, err := os.Open("sanontoja.txt")
-	if err != nil {
-		fmt.Println("Lausetta ei saatu haettua: ", err)
-		return
-	}
-	scanner := bufio.NewScanner(f)
-	scanner.Scan()
-	line := scanner.Text()
-	fmt.Println(line)
+	//PRINTATAAN VIELÄ VITSI//
+	sanoJotain()
 }
